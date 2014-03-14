@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="visible">
+
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Timer"
+            android:id="@+id/timer"
+            android:layout_gravity="bottom"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/interval"
+            android:layout_marginTop="55dp"
+            android:layout_alignRight="@+id/interval"
+            android:textSize="25sp"
+            android:onClick="showTimer"
+            />
+
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Interval"
+            android:id="@+id/interval"
+            android:layout_gravity="bottom"
+            android:layout_below="@+id/timer"
+            android:layout_marginTop="55dp"
+            android:layout_alignRight="@+id/stopwatch"
+            android:layout_alignLeft="@+id/stopwatch"
+            android:textSize="25sp"
+            android:onClick="showInterval"
+            />
+
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Stopwatch"
+            android:id="@+id/stopwatch"
+            android:layout_gravity="bottom"
+            android:layout_below="@+id/interval"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="55dp"
+            android:textSize="25sp"
+            android:onClick="showStopwatch"
+            />
+</RelativeLayout>
+
