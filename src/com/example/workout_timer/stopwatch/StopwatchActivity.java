@@ -8,15 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.workout_timer.R;
+import com.example.workout_timer.util.TimeFormatter;
 
 /**
  * Created by mislav on 3/12/14.
  */
 public class StopwatchActivity extends Activity {
-
-    private static final long MINUTES_IN_HOUR = 60;
-    private static final long SECONDS_IN_HOUR = 60;
-    private static final long MILLIS_IN_SECONDS = 1000;
 
 
     private long lastMillis;
@@ -94,7 +91,7 @@ public class StopwatchActivity extends Activity {
 
             lastMillis = SystemClock.uptimeMillis();
 
-            stopwatchHandler.postDelayed(timerThread, 0);
+            stopwatchHandler.post(timerThread);
         }
 
         private void stop() {
@@ -113,7 +110,7 @@ public class StopwatchActivity extends Activity {
             startClickListener.stop();
             lastMillis = 0;
             totalMilliseconds = 0;
-            timeSpent.setText("00:00:00:0");
+            timeSpent.setText(TimeFormatter.getTime(totalMilliseconds));
 
         }
     }
@@ -127,29 +124,10 @@ public class StopwatchActivity extends Activity {
             long currentMillis = SystemClock.uptimeMillis();
             totalMilliseconds += currentMillis - lastMillis;
             lastMillis = currentMillis;
-            long hours = getHours(totalMilliseconds);
-            long minutes = getMinutes(totalMilliseconds);
-            long seconds = getSeconds(totalMilliseconds);
-            long tenthOf = getTenthOfASecond(totalMilliseconds);
 
-            timeSpent.setText(String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + ":" + String.format("%01d", tenthOf));
-            stopwatchHandler.postDelayed(timerThread, 0);
-        }
 
-        private long getTenthOfASecond(long millis) {
-            return (millis % MILLIS_IN_SECONDS) / 100;
-        }
-
-        private long getSeconds(long millisUntilFinished) {
-            return (millisUntilFinished / MILLIS_IN_SECONDS) % SECONDS_IN_HOUR;
-        }
-
-        private long getMinutes(long millisUntilFinished) {
-            return millisUntilFinished / (SECONDS_IN_HOUR * MILLIS_IN_SECONDS) % MINUTES_IN_HOUR;
-        }
-
-        private long getHours(long millisUntilFinished) {
-            return millisUntilFinished / (MINUTES_IN_HOUR * SECONDS_IN_HOUR * MILLIS_IN_SECONDS);
+            timeSpent.setText(TimeFormatter.getTime(totalMilliseconds));
+            stopwatchHandler.post(timerThread);
         }
     }
 }
