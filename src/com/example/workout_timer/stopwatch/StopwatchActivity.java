@@ -15,6 +15,7 @@ import com.example.workout_timer.util.TimeFormatter;
  */
 public class StopwatchActivity extends Activity {
 
+    private static final String TIME_SPENT_KEY = "time-spent";
 
     private long lastMillis;
     private long totalMilliseconds;
@@ -53,16 +54,14 @@ public class StopwatchActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
 
         super.onSaveInstanceState(outState);
-        outState.putLong("start", lastMillis);
-
-
+        outState.putLong(TIME_SPENT_KEY, totalMilliseconds);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
 
         super.onRestoreInstanceState(savedInstanceState);
-        lastMillis = savedInstanceState.getLong("start");
+        totalMilliseconds = savedInstanceState.getLong(TIME_SPENT_KEY);
     }
 
     private class StartClickListener implements View.OnClickListener {
@@ -87,7 +86,6 @@ public class StopwatchActivity extends Activity {
 
             start.setText("Stop");
             started = true;
-
 
             lastMillis = SystemClock.uptimeMillis();
 
@@ -119,7 +117,6 @@ public class StopwatchActivity extends Activity {
 
         @Override
         public void run() {
-
 
             long currentMillis = SystemClock.uptimeMillis();
             totalMilliseconds += currentMillis - lastMillis;

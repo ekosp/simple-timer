@@ -3,7 +3,6 @@ package com.example.workout_timer.timer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.example.workout_timer.R;
@@ -19,13 +18,17 @@ public class TimerActivity extends Activity implements OnTimerSetListener {
     private static final long MINUTES_IN_HOUR = 60;
     private static final long SECONDS_IN_HOUR = 60;
     private static final long MILLIS_IN_SECONDS = 1000;
+    private static final long countDownInterval = 50;
 
+    public static final String HOURS = "hours";
+    public static final String MINUTES = "minutes";
+    public static final String SECONDS = "seconds";
+    public static final String SET_TIMER = "Set timer";
 
     private SimpleTimer timer;
     private long hours;
     private long minutes;
     private long seconds;
-    private long countDownInterval;
 
     private TextView timeLeft;
     private AlertDialog alertDialog;
@@ -35,19 +38,17 @@ public class TimerActivity extends Activity implements OnTimerSetListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer);
 
-
         initialize();
-
     }
 
     private void initialize() {
 
         timeLeft = (TextView) findViewById(R.id.timer);
-        countDownInterval = 500;
+
 
         timer = new SimpleTimer(timeLeft, getTimeInMillis(), countDownInterval);
         alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Set timer");
+        alertDialog.setTitle(SET_TIMER);
     }
 
     private long getTimeInMillis() {
@@ -65,8 +66,6 @@ public class TimerActivity extends Activity implements OnTimerSetListener {
     public void start(View view) {
 
         timer.start();
-
-        Log.println(Log.ERROR, "Debug", "Start invoked");
     }
 
     public void setTimer(View view) {
@@ -78,7 +77,7 @@ public class TimerActivity extends Activity implements OnTimerSetListener {
 
     public void restart(View view) {
         timer.cancel();
-        timeLeft.setText(String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        timeLeft.setText(getTimerAsString());
     }
 
     @Override
@@ -101,18 +100,18 @@ public class TimerActivity extends Activity implements OnTimerSetListener {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putLong("hours", hours);
-        outState.putLong("minutes", minutes);
-        outState.putLong("seconds", seconds);
+        outState.putLong(HOURS, hours);
+        outState.putLong(MINUTES, minutes);
+        outState.putLong(SECONDS, seconds);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        long hours = savedInstanceState.getLong("hours");
-        long minutes = savedInstanceState.getLong("minutes");
-        long seconds = savedInstanceState.getLong("seconds");
+        long hours = savedInstanceState.getLong(HOURS);
+        long minutes = savedInstanceState.getLong(MINUTES);
+        long seconds = savedInstanceState.getLong(SECONDS);
 
         updateTimer(hours, minutes, seconds);
 
@@ -125,6 +124,10 @@ public class TimerActivity extends Activity implements OnTimerSetListener {
         this.seconds = seconds;
 
         timer = new SimpleTimer(timeLeft, getTimeInMillis(), countDownInterval);
-        timeLeft.setText(String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        timeLeft.setText(getTimerAsString());
+    }
+
+    private String getTimerAsString() {
+        return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
     }
 }

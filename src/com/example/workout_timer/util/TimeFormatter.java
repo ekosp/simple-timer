@@ -5,10 +5,13 @@ package com.example.workout_timer.util;
  */
 public class TimeFormatter {
 
-
     private static final long MINUTES_IN_HOUR = 60;
     private static final long SECONDS_IN_HOUR = 60;
     private static final long MILLIS_IN_SECONDS = 1000;
+
+
+    public static final String COLON = ":";
+    public static final int START_TIME = 0;
 
     public static String getTime(long millis) {
 
@@ -17,7 +20,16 @@ public class TimeFormatter {
         long seconds = getSeconds(millis);
         long tenthOf = getTenthOfASecond(millis);
 
-        return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + ":" + String.format("%01d", tenthOf);
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("%02d", hours));
+        result.append(COLON);
+        result.append(String.format("%02d", minutes));
+        result.append(COLON);
+        result.append(String.format("%02d", seconds));
+        result.append(COLON);
+        result.append(String.format("%01d", tenthOf));
+
+        return result.toString();
     }
 
     private static long getTenthOfASecond(long millis) {
@@ -36,4 +48,7 @@ public class TimeFormatter {
         return millisUntilFinished / (MINUTES_IN_HOUR * SECONDS_IN_HOUR * MILLIS_IN_SECONDS);
     }
 
+    public static String getStartTime() {
+        return getTime(START_TIME);
+    }
 }
