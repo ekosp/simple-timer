@@ -4,13 +4,202 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Interval"
-            android:id="@+id/textInterval"
-            android:layout_alignParentTop="true"
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="90dp"/>
+            android:layout_alignParentTop="true">
+
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Ready"
+                    android:id="@+id/textView"
+                    android:layout_weight="0.25"
+                    android:gravity="center"/>
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:id="@+id/rready"
+                    android:layout_weight="0.15"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="00:00"
+                    android:id="@+id/ready_time"
+                    android:layout_weight="0.25"
+                    android:gravity="center"/>
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:id="@+id/iready"
+                    android:layout_weight="0.15"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Round"
+                    android:id="@+id/textView2"
+                    android:layout_weight="0.25"
+                    android:gravity="center"/>
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:id="@+id/rround"
+                    android:layout_weight="0.15"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="00:00"
+                    android:id="@+id/round_time"
+                    android:layout_weight="0.25"
+                    android:gravity="center"/>
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:id="@+id/iround"
+                    android:layout_weight="0.15"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Rest"
+                    android:id="@+id/textView3"
+                    android:layout_weight="0.25"
+                    android:gravity="center"/>
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:id="@+id/rrest"
+                    android:layout_weight="0.15"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="00:00"
+                    android:id="@+id/rest_time"
+                    android:layout_weight="0.25"
+                    android:gravity="center"/>
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:id="@+id/irest"
+                    android:layout_weight="0.15"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Rounds"
+                    android:id="@+id/textView4"
+                    android:layout_weight="0.25"
+                    android:gravity="center"/>
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:id="@+id/rrounds"
+                    android:layout_weight="0.15"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="0"
+                    android:id="@+id/rounds_total"
+                    android:layout_weight="0.25"
+                    android:gravity="center"/>
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:id="@+id/irounds"
+                    android:layout_weight="0.15"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Total time"
+                    android:id="@+id/total_time"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    />
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="00:00"
+                    android:id="@+id/textView10"
+                    android:layout_weight="0.25"
+                    android:gravity="center"/>
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Start"
+                    android:id="@+id/istart"
+                    android:layout_weight="0.15"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

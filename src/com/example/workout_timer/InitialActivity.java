@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import com.example.workout_timer.interval.IntervalActivity;
 import com.example.workout_timer.stopwatch.StopwatchActivity;
 import com.example.workout_timer.timer.TimerActivity;
 
