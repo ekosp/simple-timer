@@ -1,18 +1,19 @@
 package com.example.workout_timer.timer;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.example.workout_timer.FullScreenActivity;
 import com.example.workout_timer.R;
+import com.example.workout_timer.util.SimpleTimer;
 
 /**
  * TODO add stop option and continuation
  * <p/>
  * Created by mislav on 3/12/14.
  */
-public class TimerActivity extends Activity implements OnTimerSetListener {
+public class TimerActivity extends FullScreenActivity implements OnTimerSetListener {
 
 
     private static final long MINUTES_IN_HOUR = 60;

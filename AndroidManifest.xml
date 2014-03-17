@@ -19,5 +19,6 @@
         <activity android:name=".timer.TimerActivity"/>
         <activity android:name=".interval.IntervalActivity"/>
         <activity android:name=".stopwatch.StopwatchActivity"/>
+        <activity android:name=".FullScreenActivity"/>
     </application>
 </manifest>

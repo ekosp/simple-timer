@@ -1,4 +1,4 @@
-package com.example.workout_timer.timer;
+package com.example.workout_timer.util;
 
 import android.media.Ringtone;
 import android.media.RingtoneManager;

@@ -7,13 +7,14 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.example.workout_timer.FullScreenActivity;
 import com.example.workout_timer.R;
 import com.example.workout_timer.util.TimeFormatter;
 
 /**
  * Created by mislav on 3/12/14.
  */
-public class StopwatchActivity extends Activity {
+public class StopwatchActivity extends FullScreenActivity {
 
     private static final String TIME_SPENT_KEY = "time-spent";
 
