@@ -50,21 +50,6 @@ public class StopwatchActivity extends FullScreenActivity {
 
     }
 
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-
-        super.onSaveInstanceState(outState);
-        outState.putLong(TIME_SPENT_KEY, totalMilliseconds);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-
-        super.onRestoreInstanceState(savedInstanceState);
-        totalMilliseconds = savedInstanceState.getLong(TIME_SPENT_KEY);
-    }
-
     private class StartClickListener implements View.OnClickListener {
 
         private boolean started = false;

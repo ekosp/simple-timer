@@ -15,8 +15,4 @@ public class FullScreenActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }

@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.workout_timer.FullScreenActivity;
 import com.example.workout_timer.R;
-import com.example.workout_timer.util.SimpleTimer;
 
 /**
  * Created by mislav on 3/12/14.
@@ -85,6 +84,29 @@ public class IntervalActivity extends FullScreenActivity {
         decreaseRestTime.setOnClickListener(intervalsListener);
     }
 
+    private void redrawTotalTime() {
+        totalTime.setText(getTimeAsString(getTotalTime()));
+    }
+
+    private void redrawRoundNumber() {
+        roundsAsString.setText(String.valueOf(rounds));
+    }
+
+    private void redrawRoundTime() {
+        roundTimeAsString.setText(getTimeAsString(roundTime));
+    }
+
+    private void redrawRest() {
+
+        restTimeAsString.setText(getTimeAsString(restTime));
+    }
+
+    private void redrawReady() {
+
+        readyTimeAsString.setText(getTimeAsString(readyTime));
+    }
+
+
     private int getTotalTime() {
         return readyTime + rounds * (roundTime + restTime);
     }
@@ -106,6 +128,12 @@ public class IntervalActivity extends FullScreenActivity {
         public void onClick(View v) {
 
             Intent toTiming = new Intent(v.getContext(), IntervalTimingActivity.class);
+            toTiming.putExtra("ready-time", readyTime);
+            toTiming.putExtra("rest-time", restTime);
+            toTiming.putExtra("round-time", roundTime);
+            toTiming.putExtra("rounds", rounds);
+
+            startActivity(toTiming);
         }
     }
 
@@ -157,27 +185,6 @@ public class IntervalActivity extends FullScreenActivity {
 
             redrawTotalTime();
         }
-
-        private void redrawTotalTime() {
-            totalTime.setText(getTimeAsString(getTotalTime()));
-        }
-
-        private void redrawRoundNumber() {
-            roundsAsString.setText(String.valueOf(rounds));
-        }
-
-        private void redrawRoundTime() {
-            roundTimeAsString.setText(getTimeAsString(roundTime));
-        }
-
-        private void redrawRest() {
-
-            restTimeAsString.setText(getTimeAsString(restTime));
-        }
-
-        private void redrawReady() {
-
-            readyTimeAsString.setText(getTimeAsString(readyTime));
-        }
     }
-}
+
+    }

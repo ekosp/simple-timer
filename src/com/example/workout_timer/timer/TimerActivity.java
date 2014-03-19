@@ -1,12 +1,18 @@
 package com.example.workout_timer.timer;
 
 import android.app.AlertDialog;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.example.workout_timer.FullScreenActivity;
 import com.example.workout_timer.R;
+import com.example.workout_timer.util.OnTickListener;
 import com.example.workout_timer.util.SimpleTimer;
+import com.example.workout_timer.util.TimeFormatter;
 
 /**
  * TODO add stop option and continuation
@@ -33,21 +39,28 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
 
     private TextView timeLeft;
     private AlertDialog alertDialog;
+    private static TickListener tickListener;
 
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.timer);
+        Log.i("UniqueTag", "OnCreateInvoked");
 
         initialize();
     }
 
+
     private void initialize() {
 
-        timeLeft = (TextView) findViewById(R.id.timer);
+        tickListener = new TickListener();
 
+        if (timeLeft == null) {
+            timeLeft = (TextView) findViewById(R.id.timer);
+        }
 
-        timer = new SimpleTimer(timeLeft, getTimeInMillis(), countDownInterval);
+        updateTimer();
         alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(SET_TIMER);
     }
@@ -84,51 +97,39 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
     @Override
     public void onTimerSet(int hours, int minutes, int seconds) {
 
-        updateTimer(hours, minutes, seconds);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putLong(HOURS, hours);
-        outState.putLong(MINUTES, minutes);
-        outState.putLong(SECONDS, seconds);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        long hours = savedInstanceState.getLong(HOURS);
-        long minutes = savedInstanceState.getLong(MINUTES);
-        long seconds = savedInstanceState.getLong(SECONDS);
-
-        updateTimer(hours, minutes, seconds);
-
-    }
-
-    private void updateTimer(long hours, long minutes, long seconds) {
 
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
+        updateTimer();
+    }
 
-        timer = new SimpleTimer(timeLeft, getTimeInMillis(), countDownInterval);
+    private void updateTimer() {
+
+        timer = new SimpleTimer(tickListener, getTimeInMillis(), countDownInterval);
         timeLeft.setText(getTimerAsString());
     }
 
     private String getTimerAsString() {
         return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+    }
+
+    private class TickListener implements OnTickListener {
+
+
+        private Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        private Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            timeLeft.setText(TimeFormatter.getTime(millisUntilFinished));
+
+        }
+
+        @Override
+        public void onFinish() {
+            timeLeft.setText(TimeFormatter.getStartTime());
+            r.play();
+        }
     }
 }
