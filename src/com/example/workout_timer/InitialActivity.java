@@ -7,6 +7,7 @@ import android.view.View;
 import com.example.workout_timer.interval.IntervalActivity;
 import com.example.workout_timer.stopwatch.StopwatchActivity;
 import com.example.workout_timer.timer.TimerActivity;
+import com.example.workout_timer.util.SoundPlayer;
 
 public class InitialActivity extends FullScreenActivity {
     /**
@@ -17,6 +18,7 @@ public class InitialActivity extends FullScreenActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
+        SoundPlayer.initSounds(getApplicationContext());
     }
 
     public void showTimer(View view) {

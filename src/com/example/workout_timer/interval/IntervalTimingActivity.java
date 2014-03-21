@@ -1,9 +1,6 @@
 package com.example.workout_timer.interval;
 
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,15 +10,13 @@ import com.example.workout_timer.FullScreenActivity;
 import com.example.workout_timer.R;
 import com.example.workout_timer.util.OnTickListener;
 import com.example.workout_timer.util.SimpleTimer;
+import com.example.workout_timer.util.SoundPlayer;
 import com.example.workout_timer.util.TimeFormatter;
 
 /**
  * Created by mislav on 3/17/14.
  */
 public class IntervalTimingActivity extends FullScreenActivity {
-
-    private Uri notification;
-    private Ringtone r;
 
     private static final long countDownInterval = 50;
 
@@ -47,10 +42,6 @@ public class IntervalTimingActivity extends FullScreenActivity {
         timeLeft = (TextView) findViewById(R.id.intervalLeft);
         mode = (TextView) findViewById(R.id.mode);
         progressBarr = (ProgressBar) findViewById(R.id.progressBar);
-
-        notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-
 
         getValues();
         startInterval();
@@ -82,7 +73,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
     }
 
     public void playSound() {
-        r.play();
+        SoundPlayer.playNotify();
     }
 
     private class RestTickListener implements OnTickListener {
@@ -95,14 +86,14 @@ public class IntervalTimingActivity extends FullScreenActivity {
         @Override
         public void onFinish() {
 
-            r.play();
+            playSound();
 
             ++currentRound;
             if (currentRound > rounds) {
                 mode.setText("End!");
                 progressBarr.setVisibility(View.GONE);
             } else {
-                mode.setText("Round: "+currentRound+ "!");
+                mode.setText("Round: " + currentRound + "!");
                 roundTimer.start();
 
             }
@@ -120,7 +111,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
         @Override
         public void onFinish() {
 
-            r.play();
+            playSound();
             mode.setText("Rest!");
             restTimer.start();
         }
@@ -137,7 +128,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
         public void onFinish() {
 
 
-            mode.setText("Round: "+currentRound+ "!");
+            mode.setText("Round: " + currentRound + "!");
             roundTimer.start();
             playSound();
         }

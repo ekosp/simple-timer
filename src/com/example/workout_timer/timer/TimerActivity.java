@@ -12,6 +12,7 @@ import com.example.workout_timer.FullScreenActivity;
 import com.example.workout_timer.R;
 import com.example.workout_timer.util.OnTickListener;
 import com.example.workout_timer.util.SimpleTimer;
+import com.example.workout_timer.util.SoundPlayer;
 import com.example.workout_timer.util.TimeFormatter;
 
 /**
@@ -116,10 +117,6 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
 
     private class TickListener implements OnTickListener {
 
-
-        private Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        private Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-
         @Override
         public void onTick(long millisUntilFinished) {
             timeLeft.setText(TimeFormatter.getTime(millisUntilFinished));
@@ -129,7 +126,8 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
         @Override
         public void onFinish() {
             timeLeft.setText(TimeFormatter.getStartTime());
-            r.play();
+
+            SoundPlayer.playNotify();
         }
     }
 }
