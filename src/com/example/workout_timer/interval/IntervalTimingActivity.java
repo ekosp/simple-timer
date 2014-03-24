@@ -87,7 +87,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            timeLeft.setText(TimeFormatter.getTime(millisUntilFinished));
+            timeLeft.setText(TimeFormatter.getTimeInMillis(millisUntilFinished));
         }
 
         @Override
@@ -121,7 +121,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            timeLeft.setText(TimeFormatter.getTime(millisUntilFinished));
+            timeLeft.setText(TimeFormatter.getTimeInMillis(millisUntilFinished));
         }
 
         @Override
@@ -137,7 +137,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            timeLeft.setText(TimeFormatter.getTime(millisUntilFinished));
+            timeLeft.setText(TimeFormatter.getTimeInMillis(millisUntilFinished));
         }
 
         @Override

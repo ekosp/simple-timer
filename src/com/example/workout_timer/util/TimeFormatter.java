@@ -16,7 +16,7 @@ public class TimeFormatter {
     public static final String COLON = ":";
     public static final int START_TIME = 0;
 
-    public static String getTime(long millis) {
+    public static String getTimeInMillis(long millis) {
 
         long hours = getHours(millis);
         long minutes = getMinutes(millis);
@@ -31,6 +31,25 @@ public class TimeFormatter {
         result.append(String.format(TWO_DIGIT_FORMAT, seconds));
         result.append(COLON);
         result.append(String.format(ONE_DIGIT_FORMAT, tenthOf));
+
+        return result.toString();
+    }
+
+    public static String getTimeInSeconds(int totalSeconds) {
+
+        long millis = totalSeconds * MILLIS_IN_SECONDS;
+
+        long hours = getHours(millis);
+        long minutes = getMinutes(millis);
+        long seconds = getSeconds(millis);
+
+
+        StringBuilder result = new StringBuilder();
+        result.append(String.format(TWO_DIGIT_FORMAT, hours));
+        result.append(COLON);
+        result.append(String.format(TWO_DIGIT_FORMAT, minutes));
+        result.append(COLON);
+        result.append(String.format(TWO_DIGIT_FORMAT, seconds));
 
         return result.toString();
     }
@@ -52,6 +71,8 @@ public class TimeFormatter {
     }
 
     public static String getStartTime() {
-        return getTime(START_TIME);
+        return getTimeInMillis(START_TIME);
     }
+
+
 }

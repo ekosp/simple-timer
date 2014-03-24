@@ -91,7 +91,7 @@ public class StopwatchActivity extends FullScreenActivity {
             startClickListener.stop();
             lastMillis = 0;
             totalMilliseconds = 0;
-            timeSpent.setText(TimeFormatter.getTime(totalMilliseconds));
+            timeSpent.setText(TimeFormatter.getTimeInMillis(totalMilliseconds));
 
         }
     }
@@ -106,7 +106,7 @@ public class StopwatchActivity extends FullScreenActivity {
             lastMillis = currentMillis;
 
 
-            timeSpent.setText(TimeFormatter.getTime(totalMilliseconds));
+            timeSpent.setText(TimeFormatter.getTimeInMillis(totalMilliseconds));
             stopwatchHandler.post(timerThread);
         }
     }
