@@ -1,6 +1,5 @@
 package com.example.workout_timer.stopwatch;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -15,8 +14,6 @@ import com.example.workout_timer.util.TimeFormatter;
  * Created by mislav on 3/12/14.
  */
 public class StopwatchActivity extends FullScreenActivity {
-
-    private static final String TIME_SPENT_KEY = "time-spent";
 
     private long lastMillis;
     private long totalMilliseconds;
@@ -70,7 +67,7 @@ public class StopwatchActivity extends FullScreenActivity {
 
         private void start() {
 
-            start.setText("Stop");
+            start.setText(getText(R.string.stop));
             started = true;
 
             lastMillis = SystemClock.uptimeMillis();
@@ -79,7 +76,7 @@ public class StopwatchActivity extends FullScreenActivity {
         }
 
         private void stop() {
-            start.setText("Start");
+            start.setText(getText(R.string.start));
             started = false;
             stopwatchHandler.removeCallbacks(timerThread);
 

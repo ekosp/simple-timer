@@ -128,10 +128,10 @@ public class IntervalActivity extends FullScreenActivity {
         public void onClick(View v) {
 
             Intent toTiming = new Intent(v.getContext(), IntervalTimingActivity.class);
-            toTiming.putExtra("ready-time", readyTime);
-            toTiming.putExtra("rest-time", restTime);
-            toTiming.putExtra("round-time", roundTime);
-            toTiming.putExtra("rounds", rounds);
+            toTiming.putExtra(getString(R.string.interval_ready_time), readyTime);
+            toTiming.putExtra(getString(R.string.interval_rest_time), restTime);
+            toTiming.putExtra(getString(R.string.interval_round_time), roundTime);
+            toTiming.putExtra(getString(R.string.interval_rounds), rounds);
 
             startActivity(toTiming);
         }
@@ -187,4 +187,4 @@ public class IntervalActivity extends FullScreenActivity {
         }
     }
 
-    }
+}

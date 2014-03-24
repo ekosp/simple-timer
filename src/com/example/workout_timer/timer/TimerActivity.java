@@ -1,11 +1,7 @@
 package com.example.workout_timer.timer;
 
 import android.app.AlertDialog;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.example.workout_timer.FullScreenActivity;
@@ -25,13 +21,8 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
 
     private static final long MINUTES_IN_HOUR = 60;
     private static final long SECONDS_IN_HOUR = 60;
-    private static final long MILLIS_IN_SECONDS = 1000;
-    private static final long countDownInterval = 50;
 
-    public static final String HOURS = "hours";
-    public static final String MINUTES = "minutes";
-    public static final String SECONDS = "seconds";
-    public static final String SET_TIMER = "Set timer";
+    private static final long countDownInterval = 50;
 
     private SimpleTimer timer;
     private long hours;
@@ -47,7 +38,6 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.timer);
-        Log.i("UniqueTag", "OnCreateInvoked");
 
         initialize();
     }
@@ -63,18 +53,18 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
 
         updateTimer();
         alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(SET_TIMER);
+        alertDialog.setTitle(getText(R.string.end));
     }
 
-    private long getTimeInMillis() {
+    private int getTimeInSeconds() {
 
-        long timeInMillis = 0;
-        timeInMillis += hours * MINUTES_IN_HOUR * SECONDS_IN_HOUR * MILLIS_IN_SECONDS;
-        timeInMillis += minutes * SECONDS_IN_HOUR * MILLIS_IN_SECONDS;
-        timeInMillis += seconds * MILLIS_IN_SECONDS;
+        int timeInSeconds = 0;
+        timeInSeconds += hours * MINUTES_IN_HOUR * SECONDS_IN_HOUR;
+        timeInSeconds += minutes * SECONDS_IN_HOUR;
+        timeInSeconds += seconds;
 
 
-        return timeInMillis;
+        return timeInSeconds;
     }
 
 
@@ -107,7 +97,7 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
 
     private void updateTimer() {
 
-        timer = new SimpleTimer(tickListener, getTimeInMillis(), countDownInterval);
+        timer = SimpleTimer.getTimer(tickListener, getTimeInSeconds());
         timeLeft.setText(getTimerAsString());
     }
 

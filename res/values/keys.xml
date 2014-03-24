@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="interval_ready_time">"ready-time"</string>
+    <string name="interval_rest_time">"rest-time"</string>
+    <string name="interval_round_time">"round-time"</string>
+    <string name="interval_rounds">"rounds"</string>
+</resources>

@@ -21,19 +21,19 @@ public class InitialActivity extends FullScreenActivity {
         SoundPlayer.initSounds(getApplicationContext());
     }
 
-    public void showTimer(View view) {
+    public void showTimer(View ignored) {
 
         Intent timerIntent = new Intent(this, TimerActivity.class);
         startActivity(timerIntent);
     }
 
-    public void showInterval(View view) {
+    public void showInterval(View ignored) {
 
         Intent intervalIntent = new Intent(this, IntervalActivity.class);
         startActivity(intervalIntent);
     }
 
-    public void showStopwatch(View view) {
+    public void showStopwatch(View ignored) {
 
         Intent stopwatchIntent = new Intent(this, StopwatchActivity.class);
         startActivity(stopwatchIntent);

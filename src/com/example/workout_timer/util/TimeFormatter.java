@@ -5,6 +5,9 @@ package com.example.workout_timer.util;
  */
 public class TimeFormatter {
 
+    private static final String TWO_DIGIT_FORMAT = "%02d";
+    private static final String ONE_DIGIT_FORMAT = "%01d";
+
     private static final long MINUTES_IN_HOUR = 60;
     private static final long SECONDS_IN_HOUR = 60;
     private static final long MILLIS_IN_SECONDS = 1000;
@@ -21,13 +24,13 @@ public class TimeFormatter {
         long tenthOf = getTenthOfASecond(millis);
 
         StringBuilder result = new StringBuilder();
-        result.append(String.format("%02d", hours));
+        result.append(String.format(TWO_DIGIT_FORMAT, hours));
         result.append(COLON);
-        result.append(String.format("%02d", minutes));
+        result.append(String.format(TWO_DIGIT_FORMAT, minutes));
         result.append(COLON);
-        result.append(String.format("%02d", seconds));
+        result.append(String.format(TWO_DIGIT_FORMAT, seconds));
         result.append(COLON);
-        result.append(String.format("%01d", tenthOf));
+        result.append(String.format(ONE_DIGIT_FORMAT, tenthOf));
 
         return result.toString();
     }

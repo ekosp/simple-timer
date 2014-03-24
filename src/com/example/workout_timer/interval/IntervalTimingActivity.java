@@ -2,7 +2,6 @@ package com.example.workout_timer.interval;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,7 +17,7 @@ import com.example.workout_timer.util.TimeFormatter;
  */
 public class IntervalTimingActivity extends FullScreenActivity {
 
-    private static final long countDownInterval = 50;
+    private static final int FIRST_ROUND = 1;
 
     private int readyTime;
     private int roundTime;
@@ -30,9 +29,14 @@ public class IntervalTimingActivity extends FullScreenActivity {
     private TextView mode;
     private TextView timeLeft;
 
+    private SimpleTimer readyTimer;
     private SimpleTimer roundTimer;
     private SimpleTimer restTimer;
     private ProgressBar progressBarr;
+
+    private OnTickListener restTickListener;
+    private OnTickListener roundTickListener;
+    private OnTickListener readyTickListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,33 +47,36 @@ public class IntervalTimingActivity extends FullScreenActivity {
         mode = (TextView) findViewById(R.id.mode);
         progressBarr = (ProgressBar) findViewById(R.id.progressBar);
 
+        readyTickListener = new ReadyTickListener();
+        restTickListener = new RestTickListener();
+        roundTickListener = new RoundTickListener();
+
+
         getValues();
         startInterval();
+
     }
 
     private void startInterval() {
 
-        restTimer = new SimpleTimer(new RestTickListener(), restTime * 1000, countDownInterval);
-        SimpleTimer readyTimer = new SimpleTimer(new ReadyTickListener(), readyTime * 1000, countDownInterval);
-        roundTimer = new SimpleTimer(new RoundTickListener(), roundTime * 1000, countDownInterval);
+        restTimer = SimpleTimer.getTimer(restTickListener, restTime);
 
+        readyTimer = SimpleTimer.getTimer(readyTickListener, readyTime);
+        roundTimer = SimpleTimer.getTimer(roundTickListener, roundTime);
 
-        currentRound = 1;
-        mode.setText("Get ready!");
+        currentRound = FIRST_ROUND;
+        mode.setText(getText(R.string.get_ready));
         readyTimer.start();
 
     }
 
-    // TODO put keys to constants
     public void getValues() {
 
         Intent parent = getIntent();
-        readyTime = parent.getIntExtra("ready-time", 0);
-        roundTime = parent.getIntExtra("round-time", 0);
-        restTime = parent.getIntExtra("rest-time", 0);
-        rounds = parent.getIntExtra("rounds", 0);
-
-        Log.i("UniqueTag", "Rounds: " + rounds);
+        readyTime = parent.getIntExtra(getString(R.string.interval_ready_time), 0);
+        roundTime = parent.getIntExtra(getString(R.string.interval_round_time), 0);
+        restTime = parent.getIntExtra(getString(R.string.interval_rest_time), 0);
+        rounds = parent.getIntExtra(getString(R.string.interval_rounds), 0);
     }
 
     public void playSound() {
@@ -90,15 +97,24 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
             ++currentRound;
             if (currentRound > rounds) {
-                mode.setText("End!");
+                mode.setText(getString(R.string.end));
                 progressBarr.setVisibility(View.GONE);
             } else {
-                mode.setText("Round: " + currentRound + "!");
+                mode.setText(getRoundText(currentRound));
                 roundTimer.start();
 
             }
 
         }
+    }
+
+    private String getRoundText(int round) {
+
+        StringBuilder result = new StringBuilder();
+        result.append("Round: ");
+        result.append(round);
+        result.append("!");
+        return result.toString();
     }
 
     private class RoundTickListener implements OnTickListener {
@@ -112,7 +128,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
         public void onFinish() {
 
             playSound();
-            mode.setText("Rest!");
+            mode.setText(getText(R.string.rest));
             restTimer.start();
         }
     }
@@ -128,7 +144,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
         public void onFinish() {
 
 
-            mode.setText("Round: " + currentRound + "!");
+            mode.setText(getRoundText(currentRound));
             roundTimer.start();
             playSound();
         }
