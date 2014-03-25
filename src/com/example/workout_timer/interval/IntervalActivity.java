@@ -111,6 +111,8 @@ public class IntervalActivity extends FullScreenActivity {
         return readyTime + rounds * (roundTime + restTime);
     }
 
+
+    // TODO move to time formatter
     private String getTimeAsString(int seconds) {
 
         StringBuilder result = new StringBuilder();

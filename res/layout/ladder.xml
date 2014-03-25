@@ -8,8 +8,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Stopwatch"
-            android:id="@+id/stopwatchTitle"
+            android:text="Ladder"
+            android:id="@+id/ladderTitle"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:textSize="25sp"
@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:00:00:0"
-            android:id="@+id/stopwatchTime"
-            android:layout_below="@+id/stopwatchTitle"
+            android:id="@+id/ladderTime"
+            android:layout_below="@+id/ladderTitle"
             android:layout_centerHorizontal="true"
             android:textSize="60sp"
             android:layout_marginTop="118dp"/>
@@ -36,13 +36,13 @@
                 android:layout_weight="0.533"
                 android:layout_height="wrap_content"
                 android:text="Start"
-                android:id="@+id/startStopwatch"/>
+                android:id="@+id/startLadder"/>
 
         <Button
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:text="Reset"
-                android:id="@+id/resetStopwatch"/>
+                android:id="@+id/resetLadder"/>
     </LinearLayout>
 </RelativeLayout>

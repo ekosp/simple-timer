@@ -1,4 +1,4 @@
-package com.example.workout_timer.stopwatch;
+package com.example.workout_timer.ladder;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,12 +8,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.workout_timer.FullScreenActivity;
 import com.example.workout_timer.R;
+import com.example.workout_timer.util.OnTickListener;
+import com.example.workout_timer.util.SimpleTimer;
+import com.example.workout_timer.util.SoundPlayer;
 import com.example.workout_timer.util.TimeFormatter;
 
 /**
  * Created by mislav on 3/12/14.
  */
-public class StopwatchActivity extends FullScreenActivity {
+public class LadderActivity extends FullScreenActivity {
 
     private long lastMillis;
     private long totalMilliseconds;
@@ -22,24 +25,27 @@ public class StopwatchActivity extends FullScreenActivity {
     private Runnable timerThread;
 
     private StartClickListener startClickListener;
+    private OnTickListener onTickListener;
+    private SimpleTimer timer;
 
-    private TextView timeSpent;
+    private TextView timeView;
     private Button start;
     private Button reset;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stopwatch);
+        setContentView(R.layout.ladder);
 
         stopwatchHandler = new Handler();
         timerThread = new StopwatchRunnable();
         startClickListener = new StartClickListener();
+        onTickListener = new LadderTickListener();
 
 
-        timeSpent = (TextView) findViewById(R.id.stopwatchTime);
-        start = (Button) findViewById(R.id.startStopwatch);
-        reset = (Button) findViewById(R.id.resetStopwatch);
+        timeView = (TextView) findViewById(R.id.ladderTime);
+        start = (Button) findViewById(R.id.startLadder);
+        reset = (Button) findViewById(R.id.resetLadder);
 
 
         start.setOnClickListener(startClickListener);
@@ -55,7 +61,7 @@ public class StopwatchActivity extends FullScreenActivity {
         public void onClick(View view) {
 
             if (started) {
-                stop();
+                countdown();
                 return;
             }
 
@@ -68,7 +74,7 @@ public class StopwatchActivity extends FullScreenActivity {
 
         private void start() {
 
-            start.setText(getText(R.string.stop));
+            start.setText(getText(R.string.countdown));
             started = true;
 
             lastMillis = SystemClock.uptimeMillis();
@@ -76,11 +82,12 @@ public class StopwatchActivity extends FullScreenActivity {
             stopwatchHandler.post(timerThread);
         }
 
-        private void stop() {
-            start.setText(getText(R.string.start));
+        private void countdown() {
+            start.setText(getText(R.string.stop));
             started = false;
             stopwatchHandler.removeCallbacks(timerThread);
-
+            timer = SimpleTimer.getTimerFromMillis(onTickListener, totalMilliseconds);
+            timer.start();
         }
     }
 
@@ -89,10 +96,10 @@ public class StopwatchActivity extends FullScreenActivity {
         @Override
         public void onClick(View view) {
 
-            startClickListener.stop();
+            startClickListener.countdown();
             lastMillis = 0;
             totalMilliseconds = 0;
-            timeSpent.setText(TimeFormatter.getTimeFromMillis(totalMilliseconds));
+            timeView.setText(TimeFormatter.getTimeFromMillis(totalMilliseconds));
 
         }
     }
@@ -107,8 +114,22 @@ public class StopwatchActivity extends FullScreenActivity {
             lastMillis = currentMillis;
 
 
-            timeSpent.setText(TimeFormatter.getTimeFromMillis(totalMilliseconds));
+            timeView.setText(TimeFormatter.getTimeFromMillis(totalMilliseconds));
             stopwatchHandler.post(timerThread);
+        }
+    }
+
+    private class LadderTickListener implements OnTickListener {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            timeView.setText(TimeFormatter.getTimeFromMillis(millisUntilFinished));
+        }
+
+        @Override
+        public void onFinish() {
+            timeView.setText(TimeFormatter.getStartTime());
+
+            SoundPlayer.playNotify();
         }
     }
 }

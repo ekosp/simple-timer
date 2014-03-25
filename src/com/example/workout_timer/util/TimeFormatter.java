@@ -12,7 +12,7 @@ public class TimeFormatter {
     public static final String COLON = ":";
     public static final int START_TIME = 0;
 
-    public static String getTimeInMillis(long millis) {
+    public static String getTimeFromMillis(long millis) {
 
         long hours = TimeConverter.getHoursFromMillis(millis);
         long minutes = TimeConverter.getMinutesFromMillis(millis);
@@ -31,7 +31,7 @@ public class TimeFormatter {
         return result.toString();
     }
 
-    public static String getTimeInSeconds(int totalSeconds) {
+    public static String getTimeFromSeconds(int totalSeconds) {
 
         long hours = TimeConverter.getHours(totalSeconds);
         long minutes = TimeConverter.getMinutes(totalSeconds);
@@ -50,7 +50,7 @@ public class TimeFormatter {
 
 
     public static String getStartTime() {
-        return getTimeInMillis(START_TIME);
+        return getTimeFromMillis(START_TIME);
     }
 
 

@@ -29,14 +29,24 @@ public class SimpleTimer extends CountDownTimer {
         listener.onFinish();
     }
 
-    public static SimpleTimer getTimer(OnTickListener listener,int seconds){
+    public static SimpleTimer getTimerFromSeconds(OnTickListener listener, int seconds) {
 
-        return getTimer(listener, seconds, DEFAULT_COUNTDOWN_INTERVAL);
+        return getTimerFromSeconds(listener, seconds, DEFAULT_COUNTDOWN_INTERVAL);
     }
 
-    public static SimpleTimer getTimer(OnTickListener listener,int seconds, long countDownInterval){
+    public static SimpleTimer getTimerFromSeconds(OnTickListener listener, int seconds, long countDownInterval) {
 
-        return new SimpleTimer(listener,seconds * MILLIS_IN_SECONDS,countDownInterval);
+        return new SimpleTimer(listener, seconds * MILLIS_IN_SECONDS, countDownInterval);
+    }
+
+    public static SimpleTimer getTimerFromMillis(OnTickListener listener, long millis) {
+
+        return getTimerFromMillis(listener, millis, DEFAULT_COUNTDOWN_INTERVAL);
+    }
+
+    public static SimpleTimer getTimerFromMillis(OnTickListener listener, long millis, long countDownInterval) {
+
+        return new SimpleTimer(listener, millis, countDownInterval);
     }
 }
 

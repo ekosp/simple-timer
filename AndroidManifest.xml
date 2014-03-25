@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".timer.TimerActivity"/>
+        <activity android:name=".ladder.LadderActivity"/>
         <activity android:name=".interval.IntervalActivity"/>
         <activity android:name=".interval.IntervalTimingActivity"/>
         <activity android:name=".stopwatch.StopwatchActivity"/>

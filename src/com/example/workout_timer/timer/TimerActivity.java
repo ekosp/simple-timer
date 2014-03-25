@@ -15,10 +15,6 @@ import com.example.workout_timer.util.*;
  */
 public class TimerActivity extends FullScreenActivity implements OnTimerSetListener {
 
-
-    private static final int MINUTES_IN_HOUR = 60;
-    private static final int SECONDS_IN_MINUTE = 60;
-
     private SimpleTimer timer;
 
     private int seconds;
@@ -67,7 +63,7 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
 
     public void restart(View view) {
         timer.cancel();
-        timeLeft.setText(TimeFormatter.getTimeInSeconds(seconds));
+        timeLeft.setText(TimeFormatter.getTimeFromSeconds(seconds));
     }
 
     @Override
@@ -80,8 +76,8 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
 
     private void updateTimer() {
 
-        timer = SimpleTimer.getTimer(tickListener, seconds);
-        timeLeft.setText(TimeFormatter.getTimeInSeconds(seconds));
+        timer = SimpleTimer.getTimerFromSeconds(tickListener, seconds);
+        timeLeft.setText(TimeFormatter.getTimeFromSeconds(seconds));
     }
 
 
@@ -89,7 +85,7 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
 
         @Override
         public void onTick(long millisUntilFinished) {
-            timeLeft.setText(TimeFormatter.getTimeInMillis(millisUntilFinished));
+            timeLeft.setText(TimeFormatter.getTimeFromMillis(millisUntilFinished));
 
         }
 

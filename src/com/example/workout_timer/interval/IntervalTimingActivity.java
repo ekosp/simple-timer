@@ -59,10 +59,10 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
     private void startInterval() {
 
-        restTimer = SimpleTimer.getTimer(restTickListener, restTime);
+        restTimer = SimpleTimer.getTimerFromSeconds(restTickListener, restTime);
 
-        readyTimer = SimpleTimer.getTimer(readyTickListener, readyTime);
-        roundTimer = SimpleTimer.getTimer(roundTickListener, roundTime);
+        readyTimer = SimpleTimer.getTimerFromSeconds(readyTickListener, readyTime);
+        roundTimer = SimpleTimer.getTimerFromSeconds(roundTickListener, roundTime);
 
         currentRound = FIRST_ROUND;
         mode.setText(getText(R.string.get_ready));
@@ -70,7 +70,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
     }
 
-    // TODO
+    // TODO magic numbers?
     public void getValues() {
 
         Intent parent = getIntent();
@@ -88,7 +88,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            timeLeft.setText(TimeFormatter.getTimeInMillis(millisUntilFinished));
+            timeLeft.setText(TimeFormatter.getTimeFromMillis(millisUntilFinished));
         }
 
         @Override
@@ -122,7 +122,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            timeLeft.setText(TimeFormatter.getTimeInMillis(millisUntilFinished));
+            timeLeft.setText(TimeFormatter.getTimeFromMillis(millisUntilFinished));
         }
 
         @Override
@@ -138,7 +138,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            timeLeft.setText(TimeFormatter.getTimeInMillis(millisUntilFinished));
+            timeLeft.setText(TimeFormatter.getTimeFromMillis(millisUntilFinished));
         }
 
         @Override

@@ -5,6 +5,7 @@
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="get_ready">Get ready!</string>
+    <string name="countdown">Countdown!</string>
     <string name="rest">Rest!</string>
     <string name="end">End!</string>
 </resources>
