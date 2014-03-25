@@ -70,6 +70,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
     }
 
+    // TODO
     public void getValues() {
 
         Intent parent = getIntent();

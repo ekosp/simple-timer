@@ -42,7 +42,6 @@ public class CustomizedTimePicker extends AlertDialog implements NumberPicker.On
             @Override
             public void onClick(View view) {
                 setTimer(view);
-                Log.println(Log.ERROR, "Test", "Test");
 
             }
         });

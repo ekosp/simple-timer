@@ -6,12 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.example.workout_timer.FullScreenActivity;
 import com.example.workout_timer.R;
-import com.example.workout_timer.util.OnTickListener;
-import com.example.workout_timer.util.SimpleTimer;
-import com.example.workout_timer.util.SoundPlayer;
-import com.example.workout_timer.util.TimeFormatter;
-
-import java.sql.Time;
+import com.example.workout_timer.util.*;
 
 /**
  * TODO add stop option and continuation
@@ -61,10 +56,12 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
         timer.start();
     }
 
+    // TODO get better casting handling
     public void setTimer(View view) {
 
         CustomizedTimePicker timePicker = new CustomizedTimePicker(this, this, true);
-//        timePicker.setTimerPicker((int) hours, (int) minutes, (int) seconds);
+        timePicker.setTimerPicker(
+                (int) TimeConverter.getHours(seconds), (int) TimeConverter.getMinutes(seconds), (int) TimeConverter.getSeconds(seconds));
         timePicker.show();
     }
 
@@ -77,7 +74,7 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
     public void onTimerSet(int hours, int minutes, int seconds) {
 
 
-        this.seconds = hours * MINUTES_IN_HOUR * SECONDS_IN_MINUTE + minutes * SECONDS_IN_MINUTE + seconds;
+        this.seconds = TimeConverter.toSeconds(hours, minutes, seconds);
         updateTimer();
     }
 
