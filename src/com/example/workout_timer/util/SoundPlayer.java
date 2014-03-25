@@ -16,7 +16,7 @@ public class SoundPlayer {
     private static int BEEP_SOUND;
 
     public static final int HIGH_QUALITY = 100;
-    public static final int MAX_STREAMS = 2;
+    public static final int MAX_STREAMS = 1;
 
     private static Context context;
 
@@ -31,8 +31,16 @@ public class SoundPlayer {
 
     public static void playNotify() {
 
+
+        soundPool.stop(BEEP_SOUND);
         soundPool.play(BEEP_SOUND, 1,1,1,1,1F);
     }
 
+
+    public static void loopNotify() {
+
+        soundPool.stop(BEEP_SOUND);
+        soundPool.play(BEEP_SOUND, 1,1,1,-1,1F);
+    }
 }
 

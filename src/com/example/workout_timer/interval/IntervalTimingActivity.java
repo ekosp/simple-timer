@@ -84,6 +84,10 @@ public class IntervalTimingActivity extends FullScreenActivity {
         SoundPlayer.playNotify();
     }
 
+    public void loopSound(){
+        SoundPlayer.loopNotify();
+    }
+
     private class RestTickListener implements OnTickListener {
 
         @Override
@@ -103,7 +107,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
             } else {
                 mode.setText(getRoundText(currentRound));
                 roundTimer.start();
-
+                loopSound();
             }
 
         }
@@ -122,6 +126,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
+
             timeLeft.setText(TimeFormatter.getTimeFromMillis(millisUntilFinished));
         }
 
@@ -147,7 +152,7 @@ public class IntervalTimingActivity extends FullScreenActivity {
 
             mode.setText(getRoundText(currentRound));
             roundTimer.start();
-            playSound();
+            loopSound();
         }
     }
 }
