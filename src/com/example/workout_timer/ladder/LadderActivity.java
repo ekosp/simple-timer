@@ -109,7 +109,9 @@ public class LadderActivity extends FullScreenActivity {
         @Override
         public void onClick(View view) {
 
-            startClickListener.countdown();
+
+            stopwatchHandler.removeCallbacks(timerThread);
+            cancelLadder();
             lastMillis = 0;
             totalMilliseconds = 0;
             timeView.setText(TimeFormatter.getTimeFromMillis(totalMilliseconds));
@@ -143,6 +145,7 @@ public class LadderActivity extends FullScreenActivity {
             timeView.setText(TimeFormatter.getStartTime());
 
             SoundPlayer.playNotify();
+            state = State.STOPWATCH;
         }
     }
 

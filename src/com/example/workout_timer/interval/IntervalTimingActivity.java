@@ -133,16 +133,16 @@ public class IntervalTimingActivity extends FullScreenActivity {
         public void onFinish() {
 
 
-            Log.i("OnFinish", "Finishing rest timer");
             playSound();
 
             ++currentRound;
             if (currentRound > rounds) {
+
                 mode.setText(getString(R.string.end));
                 progressBarr.setVisibility(View.GONE);
             } else {
-                baseOnFinish(roundTimer, getRoundText(currentRound));
 
+                baseOnFinish(roundTimer, getRoundText(currentRound));
             }
 
         }
@@ -191,7 +191,6 @@ public class IntervalTimingActivity extends FullScreenActivity {
     protected void onPause() {
         super.onPause();
 
-        Log.i("OnPause", "Canceling timers");
         cancelTimers();
     }
 
@@ -200,7 +199,6 @@ public class IntervalTimingActivity extends FullScreenActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        Log.i("OnDestroy", "Canceling timers");
         cancelTimers();
     }
 

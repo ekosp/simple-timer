@@ -1,6 +1,7 @@
 package com.example.workout_timer.timer;
 
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -23,15 +24,56 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
     private AlertDialog alertDialog;
     private static TickListener tickListener;
 
+    private SharedPreferences preferences;
+
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.timer);
 
+        preferences = getPreferences(MODE_PRIVATE);
         initialize();
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        restoreState();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        timer.cancel();
+        saveState();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        timer.cancel();
+    }
+
+
+    private void saveState() {
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(getString(R.string.timer_value), seconds);
+        editor.commit();
+    }
+
+
+    private void restoreState() {
+
+        seconds = preferences.getInt(getString(R.string.timer_value),seconds);
+        updateTimer();
+    }
 
     private void initialize() {
 
@@ -97,17 +139,5 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
 
-        timer.cancel();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        timer.cancel();
-    }
 }

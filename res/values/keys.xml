@@ -4,4 +4,5 @@
     <string name="interval_rest_time">"rest-time"</string>
     <string name="interval_round_time">"round-time"</string>
     <string name="interval_rounds">"rounds"</string>
+    <string name="timer_value">timer_value</string>
 </resources>

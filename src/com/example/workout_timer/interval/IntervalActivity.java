@@ -1,6 +1,7 @@
 package com.example.workout_timer.interval;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,13 +35,51 @@ public class IntervalActivity extends FullScreenActivity {
     private int restTime;
     private int rounds;
 
+    private SharedPreferences preferences;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interval);
 
+        preferences = getPreferences(MODE_PRIVATE);
+
         setupTextViews();
         setupButtons();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+        saveState();
+    }
+
+    private void saveState() {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(getString(R.string.interval_ready_time), readyTime);
+        editor.putInt(getString(R.string.interval_round_time), roundTime);
+        editor.putInt(getString(R.string.interval_rest_time), restTime);
+        editor.putInt(getString(R.string.interval_rounds), rounds);
+        editor.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        restoreState();
+    }
+
+    private void restoreState() {
+        readyTime = preferences.getInt(getString(R.string.interval_ready_time), 0);
+        roundTime = preferences.getInt(getString(R.string.interval_round_time), 0);
+        restTime = preferences.getInt(getString(R.string.interval_rest_time), 0);
+        rounds = preferences.getInt(getString(R.string.interval_rounds), 0);
+
+        redrawAll();
+    }
+
 
     private void setupTextViews() {
 
@@ -84,6 +123,14 @@ public class IntervalActivity extends FullScreenActivity {
         decreaseRestTime.setOnClickListener(intervalsListener);
     }
 
+    private void redrawAll() {
+        redrawTotalTime();
+        redrawReady();
+        redrawRest();
+        redrawRoundTime();
+        redrawRoundNumber();
+    }
+
     private void redrawTotalTime() {
         totalTime.setText(getTimeAsString(getTotalTime()));
     }
@@ -97,12 +144,10 @@ public class IntervalActivity extends FullScreenActivity {
     }
 
     private void redrawRest() {
-
         restTimeAsString.setText(getTimeAsString(restTime));
     }
 
     private void redrawReady() {
-
         readyTimeAsString.setText(getTimeAsString(readyTime));
     }
 
