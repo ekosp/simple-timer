@@ -96,4 +96,18 @@ public class TimerActivity extends FullScreenActivity implements OnTimerSetListe
             SoundPlayer.playNotify();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        timer.cancel();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        timer.cancel();
+    }
 }

@@ -18,6 +18,14 @@ import com.example.workout_timer.util.TimeFormatter;
  */
 public class LadderActivity extends FullScreenActivity {
 
+    private enum State {
+        STOPWATCH, COUNTDOWN;
+    }
+
+    ;
+
+    private State state;
+
     private long lastMillis;
     private long totalMilliseconds;
 
@@ -66,6 +74,7 @@ public class LadderActivity extends FullScreenActivity {
             }
 
             if (!started) {
+
                 start();
                 return;
             }
@@ -74,6 +83,7 @@ public class LadderActivity extends FullScreenActivity {
 
         private void start() {
 
+            state = State.STOPWATCH;
             start.setText(getText(R.string.countdown));
             started = true;
 
@@ -83,11 +93,14 @@ public class LadderActivity extends FullScreenActivity {
         }
 
         private void countdown() {
+
+
             start.setText(getText(R.string.stop));
             started = false;
             stopwatchHandler.removeCallbacks(timerThread);
             timer = SimpleTimer.getTimerFromMillis(onTickListener, totalMilliseconds);
             timer.start();
+            state = State.COUNTDOWN;
         }
     }
 
@@ -130,6 +143,28 @@ public class LadderActivity extends FullScreenActivity {
             timeView.setText(TimeFormatter.getStartTime());
 
             SoundPlayer.playNotify();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        cancelLadder();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        cancelLadder();
+    }
+
+
+    private void cancelLadder() {
+        if (state == State.COUNTDOWN) {
+            timer.cancel();
         }
     }
 }
