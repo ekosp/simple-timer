@@ -2,6 +2,7 @@ package com.example.workout_timer.interval;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,6 +17,9 @@ import com.example.workout_timer.util.TimeFormatter;
  * Created by mislav on 3/17/14.
  */
 public class IntervalTimingActivity extends FullScreenActivity {
+
+
+    private boolean isCanceled;
 
     private static final int FIRST_ROUND = 1;
 
@@ -73,44 +77,22 @@ public class IntervalTimingActivity extends FullScreenActivity {
     // TODO magic numbers?
     public void getValues() {
 
+        isCanceled = false;
+
         Intent parent = getIntent();
         readyTime = parent.getIntExtra(getString(R.string.interval_ready_time), 0);
         roundTime = parent.getIntExtra(getString(R.string.interval_round_time), 0);
         restTime = parent.getIntExtra(getString(R.string.interval_rest_time), 0);
         rounds = parent.getIntExtra(getString(R.string.interval_rounds), 0);
+
     }
 
     public void playSound() {
         SoundPlayer.playNotify();
     }
 
-    public void loopSound(){
+    public void loopSound() {
         SoundPlayer.loopNotify();
-    }
-
-    private class RestTickListener implements OnTickListener {
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            timeLeft.setText(TimeFormatter.getTimeFromMillis(millisUntilFinished));
-        }
-
-        @Override
-        public void onFinish() {
-
-            playSound();
-
-            ++currentRound;
-            if (currentRound > rounds) {
-                mode.setText(getString(R.string.end));
-                progressBarr.setVisibility(View.GONE);
-            } else {
-                mode.setText(getRoundText(currentRound));
-                roundTimer.start();
-                loopSound();
-            }
-
-        }
     }
 
     private String getRoundText(int round) {
@@ -122,37 +104,113 @@ public class IntervalTimingActivity extends FullScreenActivity {
         return result.toString();
     }
 
-    private class RoundTickListener implements OnTickListener {
+
+    private abstract class BaseTickListener implements OnTickListener {
 
         @Override
         public void onTick(long millisUntilFinished) {
-
             timeLeft.setText(TimeFormatter.getTimeFromMillis(millisUntilFinished));
         }
+
+        public void baseOnFinish(SimpleTimer timer, String text) {
+
+            if (isCanceled)
+                return;
+
+            mode.setText(text);
+            timer.start();
+            startSoundNotification();
+        }
+
+        public abstract void startSoundNotification();
+    }
+
+
+    private class RestTickListener extends BaseTickListener {
+
 
         @Override
         public void onFinish() {
 
+
+            Log.i("OnFinish", "Finishing rest timer");
             playSound();
-            mode.setText(getText(R.string.rest));
-            restTimer.start();
+
+            ++currentRound;
+            if (currentRound > rounds) {
+                mode.setText(getString(R.string.end));
+                progressBarr.setVisibility(View.GONE);
+            } else {
+                baseOnFinish(roundTimer, getRoundText(currentRound));
+
+            }
+
+        }
+
+        @Override
+        public void startSoundNotification() {
+            loopSound();
         }
     }
 
-    private class ReadyTickListener implements OnTickListener {
 
-        @Override
-        public void onTick(long millisUntilFinished) {
-            timeLeft.setText(TimeFormatter.getTimeFromMillis(millisUntilFinished));
-        }
+    private class RoundTickListener extends BaseTickListener {
+
 
         @Override
         public void onFinish() {
 
 
-            mode.setText(getRoundText(currentRound));
-            roundTimer.start();
+            baseOnFinish(restTimer, getString(R.string.rest));
+        }
+
+        @Override
+        public void startSoundNotification() {
+            playSound();
+        }
+    }
+
+    private class ReadyTickListener extends BaseTickListener {
+
+
+        @Override
+        public void onFinish() {
+
+            baseOnFinish(roundTimer, getRoundText(currentRound));
+
+        }
+
+        @Override
+        public void startSoundNotification() {
             loopSound();
         }
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.i("OnPause", "Canceling timers");
+        cancelTimers();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.i("OnDestroy", "Canceling timers");
+        cancelTimers();
+    }
+
+    private void cancelTimers() {
+
+        isCanceled = true;
+
+        readyTimer.cancel();
+        restTimer.cancel();
+        readyTimer.cancel();
+        SoundPlayer.stopSound();
     }
 }
